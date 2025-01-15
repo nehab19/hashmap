@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class FindPlayers {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        Map<Integer, Integer> lost_map = new HashMap<>();
+
+        //create a map for players who lost
+        for (int[] match : matches) {
+            //as the second position tells the player that lost
+            int lose = match[1];
+            lost_map.put(lose, lost_map.getOrDefault(lose, 0) + 1);
+        }
+
+        List<Integer> notLost = new ArrayList<>();
+        List<Integer> oneLost = new ArrayList<>();
+
+        for (int[] match : matches) {
+            int losePlayer = match[1];
+            int winPlayer = match[0];
+
+            if (lost_map.get(losePlayer) == 1) {
+                oneLost.add(losePlayer);
+            }
+            if (!lost_map.containsKey(winPlayer)) {
+                notLost.add(winPlayer);
+                //now the win elements should not be repeated so adding and incrementing the value by 2
+                lost_map.put(winPlayer, 2);
+
+            }
+        }
+        Collections.sort(notLost);
+        Collections.sort(oneLost);
+        return Arrays.asList(notLost, oneLost);
+
+    }
+
+}
