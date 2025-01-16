@@ -1,0 +1,35 @@
+/** Leetcode link : https://leetcode.com/problems/word-pattern/description/ **/
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class WordPattern {
+    public boolean wordPattern(String pattern, String s) {
+        //split the string in words
+        String[] temp = s.split(" ");
+        int n = pattern.length();
+
+        if (temp.length != n) {
+            return false;
+        }
+
+        Map<String, Character> wordChar = new HashMap<>();
+        //if different character have different words mapped
+        Set<Character> usedChars = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            String word = temp[i];
+            char ch = pattern.charAt(i);
+            if (!wordChar.containsKey(word) && !usedChars.contains(ch)) {
+                wordChar.put(word, ch);
+                usedChars.add(ch);
+            }else if (wordChar.containsKey(word) && wordChar.getOrDefault(word,ch) !=ch ) {
+                return false;
+            }else if (usedChars.contains(ch) && !wordChar.containsKey(word)) {
+                return false;
+            }
+        }
+        return true;
+    }
