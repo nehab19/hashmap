@@ -1,0 +1,38 @@
+/** Leetcode link : https://leetcode.com/problems/smallest-number-in-infinite-set/description/ **/
+
+import java.util.Arrays;
+
+public class SmallestInfiniteSet {
+    private boolean[] nums;
+    private int i;
+
+    public SmallestInfiniteSet() {
+        //initialise the array with true values at first
+        nums = new boolean[1001];
+        Arrays.fill(nums, true);
+        i = 1;
+    }
+
+    public int popSmallest() {
+        int result = i; //store the smaillest number
+        //as you find the numbers that needs to be popped mark them as false
+        nums[i] = false;
+
+        //find the next smallest number we cannot simply increment the value
+        for (int j = i + 1; j < 1001; j++) {
+            if (nums[j]) {
+                i = j;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public void addBack(int num) {
+        //if we are adding the number mark that as available again
+        nums[num] = true;
+        if (num < i) {
+            i = num;
+        }
+    }
+}
