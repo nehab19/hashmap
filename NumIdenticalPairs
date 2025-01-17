@@ -1,0 +1,45 @@
+** Letcode link - https://leetcode.com/problems/number-of-good-pairs/description/ **
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class NumIdenticalPairs {
+    //approach-1
+    public int numIdenticalPairsApproach1(int[] nums) {
+        int n = nums.length;
+        int count = 0;
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (nums[j] == nums[i]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+
+    }
+
+    public int numIdenticalPairsApproach2(int[] nums) {
+        int result = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        for (int count : map.values()) {
+            result = result + (count * (count - 1)) / 2;
+        }
+        return result;
+    }
+
+    public int numIdenticalPairsApproach3(int[] nums) {
+        int result = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            result = result + map.getOrDefault(num, 0);
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        return result;
+    }
+}
