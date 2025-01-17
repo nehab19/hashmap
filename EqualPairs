@@ -1,0 +1,34 @@
+/** letcode link : https://leetcode.com/problems/equal-row-and-column-pairs/description/ **/
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class EqualPairs {
+    public int equalPairs(int[][] grid) {
+        int length = grid.length;
+        int count = 0;
+
+        //map to store the rows with frequency
+        Map<List<Integer>, Integer> map = new HashMap<>();
+
+        //iterate to store the row values
+        for (int row = 0; row < length; row++) {
+            List<Integer> rowList = new ArrayList<>();
+            for (int col = 0; col < length; col++) {
+                rowList.add(grid[row][col]);
+            }
+            map.put(rowList, map.getOrDefault(rowList, 0) + 1);
+        }
+        //compare the columns with stored row list
+        for (int col = 0; col < length; col++) {
+            List<Integer> colList = new ArrayList<>();
+            for (int row = 0; row < length; row++) {
+                colList.add(grid[row][col]);
+            }
+            count = count + map.getOrDefault(colList, 0);
+        }
+        return count;
+    }
+}
